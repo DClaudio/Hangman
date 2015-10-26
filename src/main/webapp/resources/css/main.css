@@ -1,3 +1,11 @@
+body {
+    background: #c1d72e;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    color: #fff;
+    height: 100%;
+    text-align: center;
+    font-size: 18px
+
 
 #guess {
     text-align: center;
@@ -18,4 +26,54 @@
     display: inline-block;
     padding: 0 10px;
     font-size: 1.6em;
+}
+
+
+@media (max-width: 767px)
+#alphabet {
+    padding: 0 0 0 15px;
+}
+
+#alphabet {
+    margin: 15px auto;
+    padding: 0;
+    max-width: 900px;
+}
+
+ul{
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+#alphabet li {
+    float: left;
+    margin: 0 10px 10px 0;
+    list-style: none;
+    width: 35px;
+    height: 30px;
+    padding-top: 10px;
+    background: #fff;
+    color: #c1d72e;
+    cursor: pointer;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border: solid 1px #fff;
+}
+
+#alphabet li:hover {
+    background: #c1d72e;
+    border: solid 1px #fff;
+    color: #fff;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
 }
