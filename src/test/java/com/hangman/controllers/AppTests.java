@@ -1,18 +1,20 @@
-package com.hangman;
+package com.hangman.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.UUID;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,6 +22,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ContextConfiguration("file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml")
 public class AppTests {
     private MockMvc mockMvc;
+    private MockHttpSession mockSession;
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
@@ -27,13 +30,26 @@ public class AppTests {
 
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(this.wac).build();
+
+        mockMvc = webAppContextSetup(this.wac).build();
+        mockSession = new MockHttpSession(wac.getServletContext(), UUID.randomUUID().toString());
     }
 
     @Test
-    public void simple() throws Exception {
-        mockMvc.perform(get("/"))
+    public void testGameView() throws Exception {
+        mockMvc.perform(get("/").session(mockSession))
                 .andExpect(status().isOk())
-                .andExpect(view().name("hello"));
+                .andExpect(view().name("game"))
+                .andExpect(model().attributeExists("wordToGuess"))
+                .andExpect(model().attributeExists("numberOfGuesses"))
+                .andExpect(model().attributeExists("characterCount"))
+                .andExpect(model().attributeExists("availableLetters"));
+    }
+
+    @Test
+    public void testStatsView() throws Exception {
+        mockMvc.perform(get("/stats"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("stats"));
     }
 }
