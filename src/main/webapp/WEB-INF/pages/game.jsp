@@ -16,25 +16,33 @@
 
 <body>
 
-<h1>${message}</h1>
+<h1>${title}</h1>
 
 <div id="main">
 
     <div id="guess">
         <ul id="wordToGuess">
-            <c:forEach var="i" begin="1" end="${characterCount}">
-                <li class="guess">_</li>
+            <c:forEach var="idx" begin="0" end="${characterCount - 1}">
+                <li class="guess" data-index="${idx}">_</li>
             </c:forEach>
         </ul>
     </div>
 
+    <p id="guessesLeft">You have <span id="count">${numberOfGuesses}</span> guesses left</p>
+
     <div id="buttons">
-        <ul id="alphabet">
-            <c:forEach var="letter" items="${availableLetters}">
-                <li id="letter">${letter}</li>
+        <ul id="characters">
+            <c:forEach var="character" items="${availableLetters}">
+                <li data-guess-char="${character}">${character}</li>
             </c:forEach>
         </ul>
     </div>
+
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            Hangman.init("${wordToGuess}", ${numberOfGuesses});
+        });
+    </script>
 
 </div>
 

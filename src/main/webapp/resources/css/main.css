@@ -1,13 +1,8 @@
 body {
-    background: #c1d72e;
+    background: #000;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: #fff;
     height: 100%;
-    text-align: center;
-    font-size: 18px
-
-
-#guess {
     text-align: center;
     font-size: 18px;
 }
@@ -28,18 +23,6 @@ body {
     font-size: 1.6em;
 }
 
-
-@media (max-width: 767px)
-#alphabet {
-    padding: 0 0 0 15px;
-}
-
-#alphabet {
-    margin: 15px auto;
-    padding: 0;
-    max-width: 900px;
-}
-
 ul{
     display: block;
     list-style-type: disc;
@@ -49,8 +32,18 @@ ul{
     -webkit-margin-end: 0px;
     -webkit-padding-start: 40px;
 }
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
 
-#alphabet li {
+#characters {
+    margin: 15px auto;
+    padding: 0;
+    max-width: 500px;
+}
+
+#characters li {
     float: left;
     margin: 0 10px 10px 0;
     list-style: none;
@@ -58,7 +51,7 @@ ul{
     height: 30px;
     padding-top: 10px;
     background: #fff;
-    color: #c1d72e;
+    color: #000;
     cursor: pointer;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -67,13 +60,14 @@ ul{
     border: solid 1px #fff;
 }
 
-#alphabet li:hover {
-    background: #c1d72e;
+#characters li:hover{
+    background: #000;
     border: solid 1px #fff;
     color: #fff;
 }
 
-li {
-    display: list-item;
-    text-align: -webkit-match-parent;
+#guessesLeft {
+    font-size: 1.6em;
+    text-align: center;
+    display: block;
 }

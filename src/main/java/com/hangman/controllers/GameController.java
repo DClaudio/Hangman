@@ -21,7 +21,7 @@ public class GameController {
 
         String wordToGuess = guessWordsDAO.retrieveRandomWord();
 
-        model.addAttribute("message", "Hello from game pages!");
+        model.addAttribute("title", "Welcome to Hangman!");
         model.addAttribute("wordToGuess", wordToGuess);//get from database
         model.addAttribute("characterCount", wordToGuess.length());
         model.addAttribute("numberOfGuesses", 5);//make it configurable
