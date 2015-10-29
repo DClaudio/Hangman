@@ -1,10 +1,9 @@
-var Hangman = function () {
+var HangmanGame = function () {
 
     var wordToGuess;
     var guessesLeftCount;
     var remainingCharCount;
     var guesses = [];
-
 
     function bindEvents() {
         $("#characters li").click(function (eventObject) {
@@ -19,11 +18,11 @@ var Hangman = function () {
                     $("#wordToGuess li[data-index=" + occurrences[i] + "]").text(wordToGuess[occurrences[i]]);
                 }
                 remainingCharCount = remainingCharCount - occurrences.length;
-                if (remainingCharCount === 0) showWinGameMsg();
+                if (remainingCharCount === 0) showGameOverMessage("winner");
             } else {
                 // bad guess
                 $("#guessesLeft span#count").text(--guessesLeftCount);
-                if (guessesLeftCount === 0) showLostGameMsg();
+                if (guessesLeftCount === 0) showGameOverMessage("loser");
             }
         });
     }
@@ -43,14 +42,9 @@ var Hangman = function () {
         return idx;
     }
 
-    function showLostGameMsg() {
+    function showGameOverMessage(outcome) {
         $("#characters li").addClass("gameOver").off();
-        $("#loserMessage").show();
-    }
-
-    function showWinGameMsg() {
-        $("#characters li").addClass("gameOver").off();
-        $("#winnerMessage").show();
+        $("#" + outcome + "Message").show();
     }
 
 
