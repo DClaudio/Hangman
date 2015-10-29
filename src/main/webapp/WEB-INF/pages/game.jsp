@@ -47,7 +47,7 @@
 
     <script type='text/javascript'>
         $(document).ready(function () {
-            Hangman.init("${wordToGuess}", ${numberOfGuesses});
+            HangmanGame.init("${wordToGuess}", ${numberOfGuesses});
         });
     </script>
 
