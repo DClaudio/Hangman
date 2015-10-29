@@ -26,4 +26,14 @@ public class GameStateDAOTest {
         assertEquals("placeholder word", gs.getWordToGuess().replaceAll(".", "_"),gs.getPlaceholderWord());
         assertEquals("guesses allowed", GameStateDAO.GUESSES_ALLOWED, gs.getGuessesLeft());
     }
+
+    @Test
+    public void testRetrieveGameState(){
+        GameState gs = gameStateDao.retrieveGameState("sessionIdTest");
+
+        assertNotNull("Game State Not Null", gs);
+        assertEquals("Length of word to guess vs placeholder ", gs.getWordToGuess().length(), gs.getPlaceholderWord().length());
+        assertEquals("placeholder word", gs.getWordToGuess().replaceAll(".", "_"),gs.getPlaceholderWord());
+        assertEquals("guesses allowed", GameStateDAO.GUESSES_ALLOWED, gs.getGuessesLeft());
+    }
 }
