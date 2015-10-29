@@ -60,7 +60,7 @@ li {
     border: solid 1px #fff;
 }
 
-#characters li:hover{
+#characters li:hover, #characters li.gameOver{
     background: #000;
     border: solid 1px #fff;
     color: #fff;
@@ -70,4 +70,17 @@ li {
     font-size: 1.6em;
     text-align: center;
     display: block;
+}
+
+#winnerMessage, #loserMessage{
+    font-size: 1.6em;
+    text-align: center;
+    display: none;
+}
+
+#winnerMessage{
+    color: lawngreen;
+}
+#loserMessage{
+    color: red;
 }

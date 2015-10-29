@@ -1,8 +1,39 @@
 var Hangman = function () {
 
-    var wordToGuess = "";
-    var guessesCount = 5;
+    var wordToGuess;
+    var guessesLeftCount;
+    var remainingCharCount;
     var guesses = [];
+
+
+    function bindEvents() {
+        $("#characters li").click(function (eventObject) {
+            $(eventObject.currentTarget).hide();
+            var guessChar = $(this).data("guess-char");
+            guesses.push(guessChar);
+            var occurrences = getIndexesOfChar(guessChar);
+
+            if (occurrences.length > 0) {
+                //good guess
+                for (var i = 0; i < occurrences.length; i++) {
+                    $("#wordToGuess li[data-index=" + occurrences[i] + "]").text(wordToGuess[occurrences[i]]);
+                }
+                remainingCharCount = remainingCharCount - occurrences.length;
+                if (remainingCharCount === 0) showWinGameMsg();
+            } else {
+                // bad guess
+                $("#guessesLeft span#count").text(--guessesLeftCount);
+                if (guessesLeftCount === 0) showLostGameMsg();
+            }
+        });
+    }
+
+    var init = function (word, numberOfGuesses) {
+        wordToGuess = word;
+        remainingCharCount = word.length;
+        guessesLeftCount = numberOfGuesses;
+        bindEvents();
+    };
 
     function getIndexesOfChar(character) {
         var idx = [];
@@ -12,29 +43,15 @@ var Hangman = function () {
         return idx;
     }
 
-    function bindEvents() {
-        $("#characters li").click(function () {
-            $(this).hide();
-            var guessChar = $(this).data("guess-char");
-            guesses.push(guessChar);
-            var occurrences = getIndexesOfChar(guessChar);
-            if (occurrences.length > 0) {
-                //good guess
-                for (var i = 0; i < occurrences.length; i++) {
-                    $("#wordToGuess li[data-index=" +occurrences[i] + "]").text(wordToGuess[occurrences[i]]);
-                }
-
-            } else {
-                $("#guessesLeft span#count").text(--guessesCount)
-            }
-        });
+    function showLostGameMsg() {
+        $("#characters li").addClass("gameOver").off();
+        $("#loserMessage").show();
     }
 
-    var init = function (word, numberOfGuesses) {
-        wordToGuess = word;
-        guessesCount = numberOfGuesses;
-        bindEvents();
-    };
+    function showWinGameMsg() {
+        $("#characters li").addClass("gameOver").off();
+        $("#winnerMessage").show();
+    }
 
 
     return {

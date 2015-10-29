@@ -30,6 +30,9 @@
 
     <p id="guessesLeft">You have <span id="count">${numberOfGuesses}</span> guesses left</p>
 
+    <p id="winnerMessage">Congratulations you have won!</p>
+    <p id="loserMessage">Game Over!</p>
+
     <div id="buttons">
         <ul id="characters">
             <c:forEach var="character" items="${availableLetters}">
