@@ -22,15 +22,16 @@
 
     <div id="guess">
         <ul id="wordToGuess">
-            <c:forEach var="idx" begin="0" end="${characterCount - 1}">
-                <li class="guess" data-index="${idx}">_</li>
+            <c:forEach var="letter" items="${gameState.placeholderWord.toCharArray()}" varStatus="loop">
+                <li class="guess" data-index="${loop.index}">${letter}</li>
             </c:forEach>
         </ul>
     </div>
 
-    <p id="guessesLeft">You have <span id="count">${numberOfGuesses}</span> guesses left</p>
+    <p id="guessesLeft">You have <span id="count">${gameState.guessesLeft}</span> guesses left</p>
 
     <p id="winnerMessage">Congratulations you have won!</p>
+
     <p id="loserMessage">Game Over!</p>
 
     <div id="buttons">
@@ -47,7 +48,11 @@
 
     <script type='text/javascript'>
         $(document).ready(function () {
-            HangmanGame.init("${wordToGuess}", ${numberOfGuesses});
+            HangmanGame.init({
+                wordToGuess: "${gameState.wordToGuess}",
+                placeholderWord: "${gameState.placeholderWord}",
+                guessesLeft:${gameState.guessesLeft}
+            });
         });
     </script>
 

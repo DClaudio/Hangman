@@ -40,9 +40,8 @@ public class AppTests {
         mockMvc.perform(get("/").session(mockSession))
                 .andExpect(status().isOk())
                 .andExpect(view().name("game"))
-                .andExpect(model().attributeExists("wordToGuess"))
-                .andExpect(model().attributeExists("numberOfGuesses"))
-                .andExpect(model().attributeExists("characterCount"))
+                .andExpect(model().attributeExists("title"))
+                .andExpect(model().attributeExists("gameState"))
                 .andExpect(model().attributeExists("availableLetters"));
     }
 

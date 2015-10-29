@@ -1,52 +1,31 @@
 var HangmanGame = function () {
 
-    var wordToGuess;
-    var guessesLeftCount;
-    var remainingCharCount;
-    var guesses = [];
+    var gameState;
 
-    function bindEvents() {
+    var init = function (state) {
+        gameState = state;
         $("#characters li").click(function (eventObject) {
-            $(eventObject.currentTarget).hide();
-            var guessChar = $(this).data("guess-char");
-            guesses.push(guessChar);
-            var occurrences = getIndexesOfChar(guessChar);
-
-            if (occurrences.length > 0) {
-                //good guess
-                for (var i = 0; i < occurrences.length; i++) {
-                    $("#wordToGuess li[data-index=" + occurrences[i] + "]").text(wordToGuess[occurrences[i]]);
-                }
-                remainingCharCount = remainingCharCount - occurrences.length;
-                if (remainingCharCount === 0) showGameOverMessage("winner");
-            } else {
-                // bad guess
-                $("#guessesLeft span#count").text(--guessesLeftCount);
-                if (guessesLeftCount === 0) showGameOverMessage("loser");
-            }
+            processLetterClick(eventObject);
         });
-    }
-
-    var init = function (word, numberOfGuesses) {
-        wordToGuess = word;
-        remainingCharCount = word.length;
-        guessesLeftCount = numberOfGuesses;
-        bindEvents();
     };
 
-    function getIndexesOfChar(character) {
-        var idx = [];
-        for (var i = 0; i < wordToGuess.length; i++) {
-            if (wordToGuess[i].toLowerCase() === character) idx.push(i);
+    function processLetterClick(eventObject){
+        var guessChar = $(eventObject.currentTarget).hide().data("guess-char");
+        gameState = HangmanLogic.processLetterGuess(gameState, guessChar);
+
+        $("#guessesLeft span#count").text(gameState.guessesLeft);
+        // replaces all letters
+        for (var i = 0; i < gameState.placeholderWord.length; i++) {
+            $("#wordToGuess li[data-index=" + i + "]").text(gameState.placeholderWord[i]);
         }
-        return idx;
+        if (HangmanLogic.isGameWon(gameState)) showGameOverMessage("winner");
+        if (gameState.guessesLeft === 0) showGameOverMessage("loser");
     }
 
     function showGameOverMessage(outcome) {
         $("#characters li").addClass("gameOver").off();
         $("#" + outcome + "Message").show();
     }
-
 
     return {
         "init": init

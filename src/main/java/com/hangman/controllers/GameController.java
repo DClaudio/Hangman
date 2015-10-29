@@ -1,6 +1,7 @@
 package com.hangman.controllers;
 
-import com.hangman.dao.GuessWordsDAO;
+import com.hangman.dao.GameStateDAO;
+import com.hangman.model.GameState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,17 +15,13 @@ public class GameController {
     private static char[] alphabetLetters = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 
     @Autowired
-    private GuessWordsDAO guessWordsDAO;
+    private GameStateDAO gameStateDAO;
 
     @RequestMapping(method = RequestMethod.GET)
     public String mainGameView(ModelMap model) {
-
-        String wordToGuess = guessWordsDAO.retrieveRandomWord();
-
+        GameState startGameState = gameStateDAO.retrieveStartGameState();
         model.addAttribute("title", "Welcome to Hangman!");
-        model.addAttribute("wordToGuess", wordToGuess);//get from database
-        model.addAttribute("characterCount", wordToGuess.length());
-        model.addAttribute("numberOfGuesses", 5);//make it configurable
+        model.addAttribute("gameState", startGameState);
         model.addAttribute("availableLetters", alphabetLetters);
         return "game";
     }
