@@ -23,7 +23,7 @@ body {
     font-size: 1.6em;
 }
 
-ul{
+ul {
     display: block;
     list-style-type: disc;
     -webkit-margin-before: 1em;
@@ -32,6 +32,7 @@ ul{
     -webkit-margin-end: 0px;
     -webkit-padding-start: 40px;
 }
+
 li {
     display: list-item;
     text-align: -webkit-match-parent;
@@ -41,6 +42,12 @@ li {
     margin: 15px auto;
     padding: 0;
     max-width: 500px;
+}
+
+#characters:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 #characters li {
@@ -60,7 +67,7 @@ li {
     border: solid 1px #fff;
 }
 
-#characters li:hover, #characters li.gameOver{
+#characters li:hover, #characters li.gameOver {
     background: #000;
     border: solid 1px #fff;
     color: #fff;
@@ -72,15 +79,43 @@ li {
     display: block;
 }
 
-#winnerMessage, #loserMessage{
+#winnerMessage, #loserMessage {
     font-size: 1.6em;
     text-align: center;
     display: none;
 }
 
-#winnerMessage{
+#winnerMessage {
     color: lawngreen;
 }
-#loserMessage{
+
+#loserMessage {
     color: red;
+}
+
+div.container {
+    padding: 20px;
+}
+
+#reset {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
+    background: #000;
+    color: #fff;
+    border: solid 1px #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 18px 10px;
+    width: 180px;
+    margin: 10px;
+    outline: none;
+}
+
+#reset:hover {
+    background: #fff;
+    color: #000;
+    border: solid 1px #000;
 }

@@ -41,6 +41,10 @@
         </ul>
     </div>
 
+    <div class="container">
+        <a id="reset" href="">Play again</a>
+    </div>
+
     <script type='text/javascript'>
         $(document).ready(function () {
             Hangman.init("${wordToGuess}", ${numberOfGuesses});
