@@ -28,7 +28,6 @@ public class BaseControllerTest {
 
     @Before
     public void setup() {
-
         mockMvc = webAppContextSetup(this.wac).build();
         mockSession = new MockHttpSession(wac.getServletContext(), UUID.randomUUID().toString());
     }

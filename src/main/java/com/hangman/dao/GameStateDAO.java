@@ -28,9 +28,33 @@ public class GameStateDAO {
     }
 
     public GameStateDAO() {
+        //TODO: move this into a file and read from there
         wordList = new ArrayList<>();
-        wordList.add("Test");
-        wordList.add("Hangman");
+        wordList.add("folks");
+        wordList.add("fort");
+        wordList.add("garage");
+        wordList.add("grabbed");
+        wordList.add("grandmother");
+        wordList.add("habit");
+        wordList.add("happily");
+        wordList.add("Harry");
+        wordList.add("heading");
+        wordList.add("hunter");
+        wordList.add("Illinois");
+        wordList.add("image");
+        wordList.add("independent");
+        wordList.add("instant");
+        wordList.add("January");
+        wordList.add("kids");
+        wordList.add("label");
+        wordList.add("Lee");
+        wordList.add("lungs");
+        wordList.add("manufacturing");
+        wordList.add("Martin");
+        wordList.add("mathematics");
+        wordList.add("melted");
+        wordList.add("memory");
+        wordList.add("mill");
     }
 
     public String retrieveRandomWord() {
@@ -60,7 +84,7 @@ public class GameStateDAO {
 
 
     public GameState updateGameState(String sessionId, GameState gameState) {
-        return  gameStateRepository.update(sessionId, gameState);
+        return gameStateRepository.update(sessionId, gameState);
     }
 
     public List<GameState> getCurrentGames() {
