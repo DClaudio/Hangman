@@ -52,7 +52,7 @@
                 wordToGuess: "${gameState.wordToGuess}",
                 placeholderWord: "${gameState.placeholderWord}",
                 guessesLeft:${gameState.guessesLeft}
-            });
+            }, '${sessionId}');
         });
     </script>
 

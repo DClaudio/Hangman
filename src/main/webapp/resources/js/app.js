@@ -1,17 +1,22 @@
 var HangmanGame = function () {
 
     var gameState;
+    var sessionId;
 
-    var init = function (state) {
+    var init = function (state, id) {
         gameState = state;
+        sessionId = id;
         $("#characters li").click(function (eventObject) {
             processLetterClick(eventObject);
         });
     };
 
-    function processLetterClick(eventObject){
+    function processLetterClick(eventObject) {
         var guessChar = $(eventObject.currentTarget).hide().data("guess-char");
         gameState = HangmanLogic.processLetterGuess(gameState, guessChar);
+
+        //update state on server
+        HangmanStateClient.updateState(sessionId, gameState);
 
         $("#guessesLeft span#count").text(gameState.guessesLeft);
         // replaces all letters
@@ -66,4 +71,24 @@ var HangmanLogic = function () {
         "processLetterGuess": processLetterGuess,
         "isGameWon": isGameWon
     }
+}();
+
+var HangmanStateClient = function () {
+
+    var baseUrl = "session/";
+
+    var updateState = function (sessionId, gameState) {
+        $.ajax({
+            method: 'PUT',
+            contentType: 'application/json',
+            url: baseUrl + sessionId,
+            data: JSON.stringify(gameState)
+        }).done(function (data) {
+            console.log("request success");
+        }).fail(function (data) {
+            console.log("request failed");
+        });
+    };
+
+    return {"updateState": updateState}
 }();

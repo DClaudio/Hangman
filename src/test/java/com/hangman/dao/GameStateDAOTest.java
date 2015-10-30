@@ -2,15 +2,27 @@ package com.hangman.dao;
 
 
 import com.hangman.model.GameState;
+import com.hangman.model.GameStateRepository;
+import org.easymock.EasyMock;
+import org.junit.Before;
 import org.junit.Test;
 
+import static org.easymock.EasyMock.isA;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
-public class GameStateDAOTest {
+public class GameStateDaoTest {
 
-    private GameStateDAO gameStateDao = new GameStateDAO();
+
+    private GameStateRepository mockStateRepository;
+    private GameStateDAO gameStateDao;
+
+    @Before
+    public void setUp() {
+        mockStateRepository = EasyMock.createMock(GameStateRepository.class);
+        gameStateDao = new GameStateDAO();
+        gameStateDao.setGameStateRepository(mockStateRepository);
+    }
 
     @Test
     public void testRetrieveRandomWord() {
@@ -19,21 +31,55 @@ public class GameStateDAOTest {
     }
 
     @Test
-    public void testRetrieveStartGameState() {
-        GameState gs = gameStateDao.retrieveStartGameState();
+    public void testGenerateStartGameState() {
+        GameState gs = gameStateDao.generateStartGameState();
         assertNotNull("Game State Not Null", gs);
         assertEquals("Length of word to guess vs placeholder ", gs.getWordToGuess().length(), gs.getPlaceholderWord().length());
-        assertEquals("placeholder word", gs.getWordToGuess().replaceAll(".", "_"),gs.getPlaceholderWord());
+        assertEquals("placeholder word", gs.getWordToGuess().replaceAll(".", "_"), gs.getPlaceholderWord());
         assertEquals("guesses allowed", GameStateDAO.GUESSES_ALLOWED, gs.getGuessesLeft());
     }
 
     @Test
-    public void testRetrieveGameState(){
-        GameState gs = gameStateDao.retrieveGameState("sessionIdTest");
+    public void testRetrieveGameStateForNewGame() {
+        String testSessionId = "testSessionId";
+        GameState expectedGameState  = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+        //configure mock
+        EasyMock.expect(mockStateRepository.getById(testSessionId)).andReturn(null);
+        EasyMock.expect(mockStateRepository.insert(isA(String.class), isA(GameState.class))).andReturn(expectedGameState);
+        EasyMock.replay(mockStateRepository);
 
+        // exercise method
+        GameState gs = gameStateDao.retrieveGameState(testSessionId);
+
+        //assert results
         assertNotNull("Game State Not Null", gs);
         assertEquals("Length of word to guess vs placeholder ", gs.getWordToGuess().length(), gs.getPlaceholderWord().length());
-        assertEquals("placeholder word", gs.getWordToGuess().replaceAll(".", "_"),gs.getPlaceholderWord());
+        assertEquals("placeholder word", gs.getWordToGuess().replaceAll(".", "_"), gs.getPlaceholderWord());
         assertEquals("guesses allowed", GameStateDAO.GUESSES_ALLOWED, gs.getGuessesLeft());
+        EasyMock.verify(mockStateRepository);
+    }
+
+    @Test
+    public void testGetGameSate(){
+        String testSessionId = "testSessionId";
+        GameState expectedGameState  = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+
+        EasyMock.expect(mockStateRepository.getById(testSessionId)).andReturn(expectedGameState);
+        EasyMock.replay(mockStateRepository);
+
+        assertEquals("get game state", expectedGameState, gameStateDao.getGameSate(testSessionId));
+        EasyMock.verify(mockStateRepository);
+    }
+
+    @Test
+    public void testUpdateGameState(){
+        String testSessionId = "testSessionId";
+        GameState expectedGameState  = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+
+        EasyMock.expect(mockStateRepository.update(testSessionId, expectedGameState)).andReturn(expectedGameState);
+        EasyMock.replay(mockStateRepository);
+
+        assertEquals("get game state", expectedGameState, gameStateDao.updateGameState(testSessionId, expectedGameState));
+        EasyMock.verify(mockStateRepository);
     }
 }

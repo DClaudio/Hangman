@@ -2,22 +2,28 @@ package com.hangman.dao;
 
 
 import com.hangman.model.GameState;
+import com.hangman.model.GameStateRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Repository
 public class GameStateDAO {
 
-    private List<String> wordList;
-    private Map<String, GameState> gameStateRepository;
-    public static int GUESSES_ALLOWED = 5;
+    @Autowired
+    private GameStateRepository gameStateRepository;
 
-    public Map<String, GameState> getGameStateRepository() {
+    private List<String> wordList;
+    public static int GUESSES_ALLOWED = 5;//TODO: put this in a configuration file
+
+    public GameStateRepository getGameStateRepository() {
         return gameStateRepository;
     }
 
-    public void setGameStateRepository(Map<String, GameState> gameStateRepository) {
+    public void setGameStateRepository(GameStateRepository gameStateRepository) {
         this.gameStateRepository = gameStateRepository;
     }
 
@@ -25,8 +31,6 @@ public class GameStateDAO {
         wordList = new ArrayList<>();
         wordList.add("Test");
         wordList.add("Hangman");
-
-        gameStateRepository = new HashMap<String, GameState>();
     }
 
     public String retrieveRandomWord() {
@@ -34,20 +38,28 @@ public class GameStateDAO {
         return wordList.get(randomIndex);
     }
 
-    public GameState retrieveStartGameState() {
+    public GameState generateStartGameState() {
         String randomWord = retrieveRandomWord();
         GameState gs = new GameState(randomWord, randomWord.replaceAll(".", "_"), GUESSES_ALLOWED);
         return gs;
     }
 
     public GameState retrieveGameState(String sessionId) {
-        GameState gs = null;
-        if(gameStateRepository.containsKey(sessionId)){
-            gs= gameStateRepository.get(sessionId);
-        }else{
-            gameStateRepository.put(sessionId, gs);
-            gs = retrieveStartGameState();
+        GameState gs = gameStateRepository.getById(sessionId);
+        if (gs == null) {
+            gs = generateStartGameState();
+            gameStateRepository.insert(sessionId, gs);
         }
         return gs;
+
+    }
+
+    public GameState getGameSate(String sessionId) {
+        return gameStateRepository.getById(sessionId);
+    }
+
+
+    public GameState updateGameState(String sessionId, GameState gameState) {
+        return  gameStateRepository.update(sessionId, gameState);
     }
 }
