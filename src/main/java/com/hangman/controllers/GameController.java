@@ -32,4 +32,11 @@ public class GameController {
         return "game";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "newgame")
+    @Scope("session")
+    public String newGame(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "redirect:/";
+    }
+
 }

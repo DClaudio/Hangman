@@ -62,4 +62,8 @@ public class GameStateDAO {
     public GameState updateGameState(String sessionId, GameState gameState) {
         return  gameStateRepository.update(sessionId, gameState);
     }
+
+    public List<GameState> getCurrentGames() {
+        return gameStateRepository.getAll();
+    }
 }

@@ -16,7 +16,7 @@ public class SessionApiTest extends BaseControllerTest {
     public void testSessionApiGET() throws Exception {
         String sessionId = "testSesId";
 
-        mockMvc.perform(get("/session/{id}", sessionId).contentType(TestUtil.APPLICATION_JSON_UTF8))
+        mockMvc.perform(get("/current_games/{id}", sessionId).contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
                 //.andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8));
     }
@@ -27,7 +27,7 @@ public class SessionApiTest extends BaseControllerTest {
         String sessionId = "testSesId";
         GameState expectedGameState  = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
 
-        mockMvc.perform(put("/session/{id}", sessionId)
+        mockMvc.perform(put("/current_games/{id}", sessionId)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(expectedGameState)))
                 .andExpect(status().isOk());

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(value = "/session",
+@RequestMapping(value = "/current_games",
         produces = {"application/json"})
 public class SessionApi {
 

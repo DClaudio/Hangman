@@ -3,7 +3,9 @@ package com.hangman.model;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -24,5 +26,10 @@ public class InMemoryGameStateRepository implements GameStateRepository {
     @Override
     public GameState update(String sessionId, GameState gs) {
         return gameStateDB.put(sessionId, gs);
+    }
+
+    @Override
+    public List<GameState> getAll() {
+        return new ArrayList<>(gameStateDB.values());
     }
 }

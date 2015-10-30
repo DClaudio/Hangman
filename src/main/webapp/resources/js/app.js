@@ -6,6 +6,7 @@ var HangmanGame = function () {
     var init = function (state, id) {
         gameState = state;
         sessionId = id;
+        gameOver();
         $("#characters li").click(function (eventObject) {
             processLetterClick(eventObject);
         });
@@ -17,12 +18,13 @@ var HangmanGame = function () {
 
         //update state on server
         HangmanStateClient.updateState(sessionId, gameState);
-
         $("#guessesLeft span#count").text(gameState.guessesLeft);
         // replaces all letters
-        for (var i = 0; i < gameState.placeholderWord.length; i++) {
-            $("#wordToGuess li[data-index=" + i + "]").text(gameState.placeholderWord[i]);
-        }
+        $("#guess p").text(gameState.placeholderWord);
+        gameOver();
+    }
+
+    function gameOver(){
         if (HangmanLogic.isGameWon(gameState)) showGameOverMessage("winner");
         if (gameState.guessesLeft === 0) showGameOverMessage("loser");
     }
@@ -75,7 +77,7 @@ var HangmanLogic = function () {
 
 var HangmanStateClient = function () {
 
-    var baseUrl = "session/";
+    var baseUrl = "current_games/";
 
     var updateState = function (sessionId, gameState) {
         $.ajax({

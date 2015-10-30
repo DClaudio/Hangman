@@ -21,11 +21,7 @@
 <div id="main">
 
     <div id="guess">
-        <ul id="wordToGuess">
-            <c:forEach var="letter" items="${gameState.placeholderWord.toCharArray()}" varStatus="loop">
-                <li class="guess" data-index="${loop.index}">${letter}</li>
-            </c:forEach>
-        </ul>
+        <p>${gameState.placeholderWord}</p>
     </div>
 
     <p id="guessesLeft">You have <span id="count">${gameState.guessesLeft}</span> guesses left</p>
@@ -43,7 +39,7 @@
     </div>
 
     <div class="container">
-        <a id="reset" href="">Play again</a>
+        <a id="resetGame" href="newgame">Play again</a>
     </div>
 
     <script type='text/javascript'>

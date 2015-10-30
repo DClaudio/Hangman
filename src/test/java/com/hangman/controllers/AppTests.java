@@ -31,6 +31,7 @@ public class AppTests extends BaseControllerTest {
     public void testStatsView() throws Exception {
         mockMvc.perform(get("/stats"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("stats"));
+                .andExpect(view().name("stats"))
+                .andExpect(model().attributeExists("currentGamesList"));
     }
 }

@@ -1,6 +1,8 @@
 package com.hangman.model;
 
 
+import java.util.List;
+
 public interface GameStateRepository {
 
     GameState getById(String sessionId);
@@ -9,4 +11,5 @@ public interface GameStateRepository {
 
     GameState update(String testSessionId, GameState expectedGameState);
 
+    List<GameState> getAll();
 }

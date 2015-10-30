@@ -7,6 +7,9 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.easymock.EasyMock.isA;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -42,7 +45,7 @@ public class GameStateDaoTest {
     @Test
     public void testRetrieveGameStateForNewGame() {
         String testSessionId = "testSessionId";
-        GameState expectedGameState  = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+        GameState expectedGameState = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
         //configure mock
         EasyMock.expect(mockStateRepository.getById(testSessionId)).andReturn(null);
         EasyMock.expect(mockStateRepository.insert(isA(String.class), isA(GameState.class))).andReturn(expectedGameState);
@@ -60,9 +63,9 @@ public class GameStateDaoTest {
     }
 
     @Test
-    public void testGetGameSate(){
+    public void testGetGameSate() {
         String testSessionId = "testSessionId";
-        GameState expectedGameState  = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+        GameState expectedGameState = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
 
         EasyMock.expect(mockStateRepository.getById(testSessionId)).andReturn(expectedGameState);
         EasyMock.replay(mockStateRepository);
@@ -72,14 +75,28 @@ public class GameStateDaoTest {
     }
 
     @Test
-    public void testUpdateGameState(){
+    public void testUpdateGameState() {
         String testSessionId = "testSessionId";
-        GameState expectedGameState  = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+        GameState expectedGameState = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
 
         EasyMock.expect(mockStateRepository.update(testSessionId, expectedGameState)).andReturn(expectedGameState);
         EasyMock.replay(mockStateRepository);
 
         assertEquals("get game state", expectedGameState, gameStateDao.updateGameState(testSessionId, expectedGameState));
+        EasyMock.verify(mockStateRepository);
+    }
+
+
+    @Test
+    public void testGetCurrentGames() {
+        List<GameState> currentGames = new ArrayList<>();
+        currentGames.add(new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED));
+        currentGames.add(new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED - 1));
+
+        EasyMock.expect(mockStateRepository.getAll()).andReturn(currentGames);
+        EasyMock.replay(mockStateRepository);
+
+        assertEquals("get current games", currentGames, gameStateDao.getCurrentGames());
         EasyMock.verify(mockStateRepository);
     }
 }
