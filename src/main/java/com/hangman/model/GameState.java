@@ -36,4 +36,8 @@ public class GameState {
         this.placeholderWord = placeholderWord;
         this.guessesLeft = guessesLeft;
     }
+
+    public GameState() {
+        super();
+    }
 }

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class SessionApiTest extends BaseControllerTest {
@@ -17,7 +18,7 @@ public class SessionApiTest extends BaseControllerTest {
 
         mockMvc.perform(get("/session/{id}", sessionId).contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
-        //.andExpect(content().contentType(APPLICATION_JSON_UTF8));
+                //.andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8));
     }
 
 
