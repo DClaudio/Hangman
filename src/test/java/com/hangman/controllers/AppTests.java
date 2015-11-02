@@ -22,7 +22,6 @@ public class AppTests extends BaseControllerTest {
                 .andExpect(view().name("game"))
                 .andExpect(model().attributeExists("title"))
                 .andExpect(model().attributeExists("gameState"))
-                .andExpect(model().attributeExists("gameState"))
                 .andExpect(model().attributeExists("sessionId"))
                 .andExpect(model().attributeExists("availableLetters"));
     }

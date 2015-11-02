@@ -24,7 +24,7 @@ var HangmanGame = function () {
         gameOver();
     }
 
-    function gameOver(){
+    function gameOver() {
         if (HangmanLogic.isGameWon(gameState)) showGameOverMessage("winner");
         if (gameState.guessesLeft === 0) showGameOverMessage("loser");
     }
@@ -59,7 +59,8 @@ var HangmanLogic = function () {
         return {
             wordToGuess: gameState.wordToGuess,
             placeholderWord: newStr,
-            guessesLeft: (occurrences.length === 0) ? gameState.guessesLeft - 1 : gameState.guessesLeft
+            guessesLeft: (occurrences.length === 0) ? gameState.guessesLeft - 1 : gameState.guessesLeft,
+            charactersTriedList: gameState.charactersTriedList.concat(letter)
         };
     };
 

@@ -1,11 +1,14 @@
 package com.hangman.model;
 
 
+import java.util.List;
+
 public class GameState {
 
     private String wordToGuess;
     private String placeholderWord;
     private int guessesLeft;
+    private List<Character> charactersTriedList;
 
     public String getWordToGuess() {
         return wordToGuess;
@@ -31,10 +34,19 @@ public class GameState {
         this.guessesLeft = guessesLeft;
     }
 
-    public GameState(String wordToGuess, String placeholderWord, int guessesLeft) {
+    public List<Character> getCharactersTriedList() {
+        return charactersTriedList;
+    }
+
+    public void setCharactersTriedList(List<Character> charactersTriedList) {
+        this.charactersTriedList = charactersTriedList;
+    }
+
+    public GameState(String wordToGuess, String placeholderWord, int guessesLeft, List<Character> charactersTriedList) {
         this.wordToGuess = wordToGuess;
         this.placeholderWord = placeholderWord;
         this.guessesLeft = guessesLeft;
+        this.charactersTriedList = charactersTriedList;
     }
 
     public GameState() {

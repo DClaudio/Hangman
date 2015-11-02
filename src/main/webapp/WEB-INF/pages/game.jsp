@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ju" uri="tld/JsonUtils.tld"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -24,7 +25,7 @@
         <p>${gameState.placeholderWord}</p>
     </div>
 
-    <p id="guessesLeft">You have <span id="count">${gameState.guessesLeft}</span> guesses left</p>
+    <p id="guessesLeft">You have <span id="count">${gameState.guessesLeft}</span> charactersTriedList left</p>
 
     <p id="winnerMessage">Congratulations you have won!</p>
 
@@ -47,7 +48,8 @@
             HangmanGame.init({
                 wordToGuess: "${gameState.wordToGuess}",
                 placeholderWord: "${gameState.placeholderWord}",
-                guessesLeft:${gameState.guessesLeft}
+                guessesLeft:${gameState.guessesLeft},
+                charactersTriedList:${gameState.charactersTriedList}
             }, '${sessionId}');
         });
     </script>

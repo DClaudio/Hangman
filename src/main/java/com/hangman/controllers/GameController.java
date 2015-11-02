@@ -25,9 +25,9 @@ public class GameController {
     @Scope("session")
     public String mainGameView(ModelMap model, HttpServletRequest request) {
         String sessionId = request.getSession().getId();
-        GameState startGameState = gameStateDAO.retrieveGameState(sessionId);
+        GameState gameState = gameStateDAO.retrieveGameState(sessionId);
         model.addAttribute("title", "Welcome to Hangman!");
-        model.addAttribute("gameState", startGameState);
+        model.addAttribute("gameState", gameState);
         model.addAttribute("sessionId", sessionId);
         model.addAttribute("availableLetters", alphabetLetters);
         return "game";

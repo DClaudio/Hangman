@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -64,7 +65,7 @@ public class GameStateDAO {
 
     public GameState generateStartGameState() {
         String randomWord = retrieveRandomWord();
-        GameState gs = new GameState(randomWord, randomWord.replaceAll(".", "_"), GUESSES_ALLOWED);
+        GameState gs = new GameState(randomWord, randomWord.replaceAll(".", "_"), GUESSES_ALLOWED, Collections.<Character>emptyList());
         return gs;
     }
 

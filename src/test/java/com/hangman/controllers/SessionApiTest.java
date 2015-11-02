@@ -25,7 +25,7 @@ public class SessionApiTest extends BaseControllerTest {
     @Test
     public void testSessionApiPUT() throws Exception {
         String sessionId = "testSesId";
-        GameState expectedGameState  = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+        GameState expectedGameState  = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED, TestUtil.EMPTY_LIST);
 
         mockMvc.perform(put("/current_games/{id}", sessionId)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

@@ -1,6 +1,7 @@
 package com.hangman.dao;
 
 
+import com.hangman.controllers.TestUtil;
 import com.hangman.model.GameState;
 import com.hangman.model.GameStateRepository;
 import org.easymock.EasyMock;
@@ -8,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.easymock.EasyMock.isA;
@@ -15,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class GameStateDaoTest {
-
 
     private GameStateRepository mockStateRepository;
     private GameStateDAO gameStateDao;
@@ -39,13 +40,13 @@ public class GameStateDaoTest {
         assertNotNull("Game State Not Null", gs);
         assertEquals("Length of word to guess vs placeholder ", gs.getWordToGuess().length(), gs.getPlaceholderWord().length());
         assertEquals("placeholder word", gs.getWordToGuess().replaceAll(".", "_"), gs.getPlaceholderWord());
-        assertEquals("guesses allowed", GameStateDAO.GUESSES_ALLOWED, gs.getGuessesLeft());
+        assertEquals("guesses allowed", 5, gs.getGuessesLeft());
     }
 
     @Test
     public void testRetrieveGameStateForNewGame() {
         String testSessionId = "testSessionId";
-        GameState expectedGameState = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+        GameState expectedGameState = new GameState("Test", "____", 5, TestUtil.EMPTY_LIST);
         //configure mock
         EasyMock.expect(mockStateRepository.getById(testSessionId)).andReturn(null);
         EasyMock.expect(mockStateRepository.insert(isA(String.class), isA(GameState.class))).andReturn(expectedGameState);
@@ -58,14 +59,14 @@ public class GameStateDaoTest {
         assertNotNull("Game State Not Null", gs);
         assertEquals("Length of word to guess vs placeholder ", gs.getWordToGuess().length(), gs.getPlaceholderWord().length());
         assertEquals("placeholder word", gs.getWordToGuess().replaceAll(".", "_"), gs.getPlaceholderWord());
-        assertEquals("guesses allowed", GameStateDAO.GUESSES_ALLOWED, gs.getGuessesLeft());
+        assertEquals("guesses allowed", 5, gs.getGuessesLeft());
         EasyMock.verify(mockStateRepository);
     }
 
     @Test
     public void testGetGameSate() {
         String testSessionId = "testSessionId";
-        GameState expectedGameState = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+        GameState expectedGameState = new GameState("Test", "____", 5, TestUtil.EMPTY_LIST);
 
         EasyMock.expect(mockStateRepository.getById(testSessionId)).andReturn(expectedGameState);
         EasyMock.replay(mockStateRepository);
@@ -77,7 +78,7 @@ public class GameStateDaoTest {
     @Test
     public void testUpdateGameState() {
         String testSessionId = "testSessionId";
-        GameState expectedGameState = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+        GameState expectedGameState = new GameState("Test", "____", 5, TestUtil.EMPTY_LIST);
 
         EasyMock.expect(mockStateRepository.update(testSessionId, expectedGameState)).andReturn(expectedGameState);
         EasyMock.replay(mockStateRepository);
@@ -90,8 +91,10 @@ public class GameStateDaoTest {
     @Test
     public void testGetCurrentGames() {
         List<GameState> currentGames = new ArrayList<>();
-        currentGames.add(new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED));
-        currentGames.add(new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED - 1));
+        List<Character> chrList = new ArrayList<>();
+        chrList.add('x');
+        currentGames.add(new GameState("Test", "____", 5, TestUtil.EMPTY_LIST));
+        currentGames.add(new GameState("Test", "____", 5 - 1, chrList));
 
         EasyMock.expect(mockStateRepository.getAll()).andReturn(currentGames);
         EasyMock.replay(mockStateRepository);
@@ -104,7 +107,7 @@ public class GameStateDaoTest {
     @Test
     public void testDeleteGameState() {
         String stateId = "tstStateId";
-        GameState stateToDelete = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+        GameState stateToDelete = new GameState("Test", "____", 5, TestUtil.EMPTY_LIST);
 
         EasyMock.expect(mockStateRepository.delete(stateId)).andReturn(stateToDelete);
         EasyMock.replay(mockStateRepository);
