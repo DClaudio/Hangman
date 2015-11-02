@@ -7,19 +7,8 @@ body {
     font-size: 18px;
 }
 
-#wordToGuess {
-    margin: 0;
-    display: block;
-    padding: 0;
-    display: block;
-}
-
-.guess {
-    position: relative;
-    list-style: none;
-    margin: 0;
-    display: inline-block;
-    padding: 0 10px;
+#guess p {
+    letter-spacing: 10px;
     font-size: 1.6em;
 }
 
@@ -97,7 +86,7 @@ div.container {
     padding: 20px;
 }
 
-#reset {
+#resetGame {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -114,8 +103,24 @@ div.container {
     outline: none;
 }
 
-#reset:hover {
+#resetGame:hover {
     background: #fff;
     color: #000;
     border: solid 1px #000;
+}
+
+table#statsTable {
+    margin: 0 auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#statsTable td.placeholder {
+    letter-spacing: 3px;
+}
+
+table, tr, td, tr, th {
+    border: solid;
+    border-width: 2px;
+    border-color: #ca3a11;
 }
