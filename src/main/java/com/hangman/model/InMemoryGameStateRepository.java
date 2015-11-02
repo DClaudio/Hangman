@@ -32,4 +32,9 @@ public class InMemoryGameStateRepository implements GameStateRepository {
     public List<GameState> getAll() {
         return new ArrayList<>(gameStateDB.values());
     }
+
+    @Override
+    public GameState delete(String stateId) {
+        return gameStateDB.remove(stateId);
+    }
 }

@@ -99,4 +99,17 @@ public class GameStateDaoTest {
         assertEquals("get current games", currentGames, gameStateDao.getCurrentGames());
         EasyMock.verify(mockStateRepository);
     }
+
+
+    @Test
+    public void testDeleteGameState() {
+        String stateId = "tstStateId";
+        GameState stateToDelete = new GameState("Test", "____", GameStateDAO.GUESSES_ALLOWED);
+
+        EasyMock.expect(mockStateRepository.delete(stateId)).andReturn(stateToDelete);
+        EasyMock.replay(mockStateRepository);
+
+        assertEquals("delete state", stateToDelete, gameStateDao.deleteGameSate(stateId));
+        EasyMock.verify(mockStateRepository);
+    }
 }

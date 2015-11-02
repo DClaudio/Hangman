@@ -12,4 +12,6 @@ public interface GameStateRepository {
     GameState update(String testSessionId, GameState expectedGameState);
 
     List<GameState> getAll();
+
+    GameState delete(String stateId);
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
@@ -35,7 +36,11 @@ public class GameController {
     @RequestMapping(method = RequestMethod.GET, value = "newgame")
     @Scope("session")
     public String newGame(HttpServletRequest request){
-        request.getSession().invalidate();
+        //remove http session
+        HttpSession session = request.getSession();
+        //remove saved game state
+        gameStateDAO.deleteGameSate(session.getId());
+        session.invalidate();
         return "redirect:/";
     }
 

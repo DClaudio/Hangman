@@ -90,4 +90,8 @@ public class GameStateDAO {
     public List<GameState> getCurrentGames() {
         return gameStateRepository.getAll();
     }
+
+    public GameState deleteGameSate(String stateId) {
+        return gameStateRepository.delete(stateId);
+    }
 }
