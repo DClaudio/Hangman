@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="ju" uri="tld/JsonUtils.tld"%>
+<%--@ taglib prefix="ju" uri="/WEB-INF/pages/JsonUtils.tld"--%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -25,11 +25,11 @@
         <p>${gameState.placeholderWord}</p>
     </div>
 
-    <p id="guessesLeft">You have <span id="count">${gameState.guessesLeft}</span> charactersTriedList left</p>
+    <p id="guessesLeft">You have <span id="count">${gameState.guessesLeft}</span> guesses left</p>
 
     <p id="winnerMessage">Congratulations you have won!</p>
 
-    <p id="loserMessage">Game Over!</p>
+    <p id="loserMessage">Game Over! The word was &lt; ${gameState.wordToGuess} &gt;</p>
 
     <div id="buttons">
         <ul id="characters">
@@ -49,7 +49,7 @@
                 wordToGuess: "${gameState.wordToGuess}",
                 placeholderWord: "${gameState.placeholderWord}",
                 guessesLeft:${gameState.guessesLeft},
-                charactersTriedList:${gameState.charactersTriedList}
+                charactersTriedList:[]
             }, '${sessionId}');
         });
     </script>
