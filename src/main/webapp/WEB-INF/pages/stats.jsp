@@ -21,6 +21,7 @@
             <th>No</th>
             <th>Word to Guess</th>
             <th>Current State</th>
+            <th>Characters Tried</th>
             <th>Guesses Left</th>
         </tr>
         <c:forEach var="gameState" items="${currentGamesList}" varStatus="loop">
@@ -28,6 +29,7 @@
                 <td>${loop.index + 1}</td>
                 <td>${gameState.wordToGuess}</td>
                 <td class="placeholder">${gameState.placeholderWord}</td>
+                <td>${gameState.charactersTriedList}</td>
                 <td>${gameState.guessesLeft}</td>
             </tr>
         </c:forEach>
